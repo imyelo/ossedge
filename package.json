@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "oss-mirror",
+  "name": "ossedge",
   "version": "0.0.0",
   "description": "",
   "type": "module",
@@ -27,15 +27,15 @@
     "node": ">= 18"
   },
   "repository": {
-    "url": "imyelo/oss-mirror",
+    "url": "imyelo/ossedge",
     "type": "git"
   },
   "author": "yelo <zhihuzeye@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/imyelo/oss-mirror/issues"
+    "url": "https://github.com/imyelo/ossedge/issues"
   },
-  "homepage": "https://github.com/imyelo/oss-mirror#readme",
+  "homepage": "https://github.com/imyelo/ossedge#readme",
   "devDependencies": {
     "@vercel/ncc": "^0.38.1",
     "@yelo/eslint-config": "^0.2.0",
