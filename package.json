@@ -15,10 +15,10 @@
     "lib"
   ],
   "scripts": {
-    "start": "listhen -w ./src/index.ts",
+    "dev": "listhen -w ./src/app.ts",
     "clean": "rimraf ./lib",
     "prebuild": "npm run clean",
-    "build": "tsc -p ./tsconfig.esm.json",
+    "build": "ncc build ./src/index.ts -o lib -t && cp ./.env ./lib",
     "test": "ava",
     "prepare": "husky install",
     "release": "np"
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/imyelo/oss-mirror#readme",
   "devDependencies": {
+    "@vercel/ncc": "^0.38.1",
     "@yelo/eslint-config": "^0.2.0",
     "@yelo/prettier-config": "^0.1.0",
     "@yelo/tsconfig": "^0.3.0",
