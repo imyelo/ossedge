@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "oss-mirror",
   "version": "0.0.0",
   "description": "",
@@ -14,7 +15,7 @@
     "lib"
   ],
   "scripts": {
-    "dev": "node --loader ts-node/esm ./src/index.ts",
+    "start": "listhen -w ./src/index.ts",
     "clean": "rimraf ./lib",
     "prebuild": "npm run clean",
     "build": "tsc -p ./tsconfig.esm.json",
@@ -43,6 +44,7 @@
     "eslint": "^8.38.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
+    "listhen": "^1.7.2",
     "np": "^7.7.0",
     "prettier": "^2.8.7",
     "prettier-eslint-cli": "^6.0.1",
@@ -70,5 +72,10 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "ali-oss": "^6.21.0",
+    "dotenv-flow": "^4.1.0",
+    "h3": "^1.12.0"
   }
 }

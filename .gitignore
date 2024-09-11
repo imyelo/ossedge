@@ -7,3 +7,6 @@ lerna-debug.log
 
 # dist
 /lib
+
+# secrets
+*.local
