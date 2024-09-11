@@ -8,5 +8,8 @@ lerna-debug.log
 # dist
 /lib
 
+# cache
+/.cache
+
 # secrets
 *.local
