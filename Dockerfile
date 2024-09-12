@@ -6,7 +6,7 @@ WORKDIR /app/
 
 COPY package.json yarn.lock ./
 COPY tsconfig.json tsconfig.esm.json ./
-COPY .env ./
+COPY .env .env.production ./
 COPY src ./src
 
 RUN yarn install

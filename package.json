@@ -21,7 +21,7 @@
     "clean": "rimraf ./lib ./dist",
     "prebuild": "npm run clean",
     "build:lib": "tsc -p ./tsconfig.esm.json",
-    "build:standalone": "ncc build ./src/bin/start.ts -o dist -t && cp ./.env ./dist",
+    "build:standalone": "ncc build ./src/bin/start.ts -o dist -t && cp ./.env ./.env.production ./dist",
     "build": "npm run build:lib && npm run build:standalone",
     "test": "ava",
     "prepare": "husky install",
