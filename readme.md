@@ -6,7 +6,7 @@
 
 OSS Edge uses [dotenv-flow](https://github.com/kerimdzhanov/dotenv-flow) for environment variable configuration. You can configure it by either:
 
-1. Creating a `.env.local` file (which is ignored by git)
+1. Creating a `.env.local` (and `.env.production.local` for production) file (which is ignored by git)
 
    OR
 
@@ -50,6 +50,12 @@ To run OSS Edge using Docker:
 
 ```bash
 docker run --rm -p 3000:3000 -v ./.env.local:/app/.env ghcr.io/imyelo/ossedge:latest
+```
+
+for production:
+
+```bash
+docker run --rm -p 3000:3000 -v ./.env.production.local:/app/.env -e NODE_ENV=production ghcr.io/imyelo/ossedge:latest
 ```
 
 ### Use as a CLI
