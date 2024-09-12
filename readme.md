@@ -49,25 +49,25 @@ Make sure to keep your .env file secure and do not commit it to version control.
 To run OSS Edge using Docker:
 
 ```bash
-docker run --rm -p 3000:3000 -v ./.env.local:/app/.env ghcr.io/imyelo/oss-edge:latest
+docker run --rm -p 3000:3000 -v ./.env.local:/app/.env ghcr.io/imyelo/ossedge:latest
 ```
 
 ### Use as a CLI
 
 ```bash
-npx oss-edge
+npx ossedge
 ```
 
 ### Use as a Node.js module
 
 ```bash
-yarn add oss-edge
+yarn add ossedge
 ```
 
 ```javascript
 import { createServer } from 'node:http'
 import { toNodeListener } from 'h3'
-import { app } from 'oss-edge'
+import { app } from 'ossedge'
 
 createServer(toNodeListener(app)).listen(3000)
 ```
