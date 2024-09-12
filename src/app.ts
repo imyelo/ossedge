@@ -13,6 +13,7 @@ import {
   APP_OSS_BUCKET_NAME,
   APP_OSS_REGION,
 } from './env.js'
+import { useHealth } from './health.js'
 import { logger } from './log.js'
 
 const oss = new OSS({
@@ -34,6 +35,8 @@ export const app = createApp()
     zip: false,
   })
   const fsCache = await caching(store)
+
+  useHealth(app)
 
   app.use(
     '/',
