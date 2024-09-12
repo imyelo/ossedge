@@ -10,12 +10,12 @@ COPY .env ./
 COPY src ./src
 
 RUN yarn install
-RUN yarn build
+RUN yarn build:standalone
 
 FROM node:18
 
 WORKDIR /app/
 
-COPY --from=builder /app/lib/ ./
+COPY --from=builder /app/dist/ ./
 
 CMD ["node", "."]

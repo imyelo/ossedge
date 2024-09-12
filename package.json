@@ -1,8 +1,7 @@
 {
-  "private": true,
   "name": "ossedge",
   "version": "0.0.0",
-  "description": "",
+  "description": "🚀 Reverse proxy for OSS, a lightweight CDN alternative.",
   "type": "module",
   "exports": {
     ".": {
@@ -14,11 +13,16 @@
   "files": [
     "lib"
   ],
+  "bin": {
+    "ossedge": "./lib/esm/bin/start.js"
+  },
   "scripts": {
     "dev": "listhen -w ./src/app.ts",
-    "clean": "rimraf ./lib",
+    "clean": "rimraf ./lib ./dist",
     "prebuild": "npm run clean",
-    "build": "ncc build ./src/index.ts -o lib -t && cp ./.env ./lib",
+    "build:lib": "tsc -p ./tsconfig.esm.json",
+    "build:standalone": "ncc build ./src/bin/start.ts -o dist -t && cp ./.env ./dist",
+    "build": "npm run build:lib && npm run build:standalone",
     "test": "ava",
     "prepare": "husky install",
     "release": "np"
@@ -37,6 +41,7 @@
   },
   "homepage": "https://github.com/imyelo/ossedge#readme",
   "devDependencies": {
+    "@types/supertest": "^6.0.2",
     "@vercel/ncc": "^0.38.1",
     "@yelo/eslint-config": "^0.2.0",
     "@yelo/prettier-config": "^0.1.0",
@@ -50,15 +55,16 @@
     "prettier": "^2.8.7",
     "prettier-eslint-cli": "^6.0.1",
     "rimraf": "^4.4.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "supertest": "^7.0.0",
+    "tsimp": "^2.0.11",
+    "typescript": "~5.0.3"
   },
   "ava": {
     "extensions": {
       "ts": "module"
     },
     "nodeArguments": [
-      "--loader=ts-node/esm"
+      "--import=tsimp"
     ],
     "files": [
       "test/**/*",
