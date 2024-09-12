@@ -1,6 +1,7 @@
 import OSS from 'ali-oss'
 import { caching } from 'cache-manager'
 import { DiskStore } from 'cache-manager-fs-hash'
+import fs from 'fs'
 import { appendHeader, createApp, defineEventHandler, sendNoContent, setResponseStatus } from 'h3'
 import { Readable } from 'stream'
 import {
@@ -22,6 +23,9 @@ const oss = new OSS({
 
 export const app = createApp()
 ;(async () => {
+  // 确保缓存目录存在
+  fs.mkdirSync(APP_CACHE_DIR, { recursive: true })
+
   const store = new DiskStore({
     path: APP_CACHE_DIR,
     max: APP_CACHE_MAX_ITEMS,

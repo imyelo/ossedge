@@ -9,7 +9,7 @@ lerna-debug.log
 /lib
 
 # cache
-/.cache
+/.ossedge
 
 # secrets
 *.local
