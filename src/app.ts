@@ -13,6 +13,7 @@ import {
   APP_OSS_BUCKET_NAME,
   APP_OSS_REGION,
 } from './env.js'
+import { logger } from './log.js'
 
 const oss = new OSS({
   region: APP_OSS_REGION,
@@ -40,12 +41,16 @@ export const app = createApp()
       try {
         const filePath = event.path === '/' ? 'index.html' : event.path.slice(1)
 
+        logger.info({ path: filePath }, 'Received request')
+
         if (filePath === 'favicon.ico') {
+          logger.debug('Favicon request, sending no content')
           return sendNoContent(event)
         }
 
         const cached = await fsCache.get<{ content: Buffer; headers: Record<string, string> }>(filePath)
         if (cached) {
+          logger.debug({ path: filePath }, 'Serving from cache')
           const { content, headers } = cached
           Object.entries(headers).forEach(([key, value]) => {
             appendHeader(event, key, value)
@@ -53,6 +58,7 @@ export const app = createApp()
           return Readable.from(content)
         }
 
+        logger.debug({ path: filePath }, 'Fetching from OSS')
         const result = await oss.get(filePath)
         const headers = {
           'Content-Type': result.res.headers['content-type'],
@@ -62,12 +68,14 @@ export const app = createApp()
         }
 
         await fsCache.set(filePath, { content: result.content, headers })
+        logger.debug({ path: filePath }, 'Cached file')
 
         Object.entries(headers).forEach(([key, value]) => {
           appendHeader(event, key, value)
         })
         return Readable.from(result.content)
       } catch (error) {
+        logger.error({ error, path: event.path }, 'Error serving file')
         setResponseStatus(event, 404)
         return 'File not found'
       }
