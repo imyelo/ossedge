@@ -23,7 +23,6 @@ const oss = new OSS({
 
 export const app = createApp()
 ;(async () => {
-  // 确保缓存目录存在
   fs.mkdirSync(APP_CACHE_DIR, { recursive: true })
 
   const store = new DiskStore({
