@@ -1,6 +1,6 @@
 {
   "name": "ossedge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "🚀 Reverse proxy for OSS, a lightweight CDN alternative.",
   "type": "module",
   "exports": {
