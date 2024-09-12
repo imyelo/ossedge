@@ -5,5 +5,5 @@ export const logger = pino(
   {
     level: APP_LOG_LEVEL,
   },
-  APP_LOG_FILE ? pino.destination({ dest: APP_LOG_FILE, sync: true }) : process.stdout
+  APP_LOG_FILE ? pino.destination(APP_LOG_FILE) : process.stdout
 )
