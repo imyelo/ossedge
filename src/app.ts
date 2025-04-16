@@ -51,9 +51,10 @@ export const app = createApp()
           return sendNoContent(event)
         }
 
-        const cached = await fsCache.get<{ content: Buffer; headers: Record<string, string> }>(filePath)
+        const decodedFilePath = decodeURIComponent(filePath)
+        const cached = await fsCache.get<{ content: Buffer; headers: Record<string, string> }>(decodedFilePath)
         if (cached) {
-          logger.debug({ path: filePath }, 'Serving from cache')
+          logger.debug({ path: decodedFilePath }, 'Serving from cache')
           const { content, headers } = cached
           Object.entries(headers).forEach(([key, value]) => {
             appendHeader(event, key, value)
@@ -61,8 +62,8 @@ export const app = createApp()
           return Readable.from(content)
         }
 
-        logger.debug({ path: filePath }, 'Fetching from OSS')
-        const result = await oss.get(filePath)
+        logger.debug({ path: decodedFilePath }, 'Fetching from OSS')
+        const result = await oss.get(decodedFilePath)
         const headers = {
           'Content-Type': result.res.headers['content-type'],
           'Content-Length': result.res.headers['content-length'],
@@ -70,8 +71,8 @@ export const app = createApp()
           Expires: new Date(Date.now() + 31536000000).toUTCString(),
         }
 
-        await fsCache.set(filePath, { content: result.content, headers })
-        logger.debug({ path: filePath }, 'Cached file')
+        await fsCache.set(decodedFilePath, { content: result.content, headers })
+        logger.debug({ path: decodedFilePath }, 'Cached file')
 
         Object.entries(headers).forEach(([key, value]) => {
           appendHeader(event, key, value)
